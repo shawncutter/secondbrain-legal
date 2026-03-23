@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecondBrain - Architecture & Documentation</title>
+  <style>
+    :root {
+      --bg: #0f172a; --bg2: #1e293b; --bg3: #0d1117;
+      --text: #e2e8f0; --muted: #94a3b8; --dim: #64748b;
+      --accent: #3b82f6; --accent2: #8b5cf6; --green: #22c55e; --amber: #f59e0b; --red: #ef4444;
+      --border: #334155; --border2: #1e293b;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Fira Code', monospace; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    /* Layout */
+    .layout { display: flex; min-height: 100vh; }
+    .sidebar { width: 280px; background: var(--bg3); border-right: 1px solid var(--border); padding: 1.5rem; position: fixed; top: 0; bottom: 0; overflow-y: auto; z-index: 10; }
+    .main { margin-left: 280px; flex: 1; padding: 2rem 3rem; max-width: 960px; }
+
+    /* Sidebar */
+    .logo { font-size: 1.25rem; font-weight: 700; color: var(--accent); margin-bottom: 0.25rem; }
+    .logo-sub { font-size: 0.75rem; color: var(--dim); margin-bottom: 1.5rem; display: block; }
+    .nav-section { margin-bottom: 1rem; }
+    .nav-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); margin-bottom: 0.5rem; font-weight: 600; }
+    .nav-link { display: block; padding: 0.35rem 0.75rem; color: var(--muted); text-decoration: none; border-radius: 0.375rem; font-size: 0.85rem; transition: all 0.15s; }
+    .nav-link:hover { background: var(--bg2); color: var(--text); }
+
+    /* Typography */
+    h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.5rem; margin-top: 3rem; margin-bottom: 1rem; color: var(--text); padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+    h3 { font-size: 1.15rem; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--accent); }
+    h4 { font-size: 1rem; margin-top: 1.25rem; margin-bottom: 0.5rem; color: var(--accent2); }
+    p { margin-bottom: 0.75rem; color: var(--muted); }
+    ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    li { margin-bottom: 0.35rem; color: var(--muted); }
+    a { color: var(--accent); text-decoration: none; }
+    strong { color: var(--text); }
+
+    /* Components */
+    .hero { background: linear-gradient(135deg, #1e3a5f 0%, #1e1b4b 100%); border-radius: 1rem; padding: 2rem; margin-bottom: 2rem; border: 1px solid var(--border); }
+    .hero h1 { font-size: 1.75rem; }
+    .hero p { color: var(--muted); margin: 0; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 1.5rem 0; }
+    .stat { background: rgba(255,255,255,0.05); border-radius: 0.75rem; padding: 1rem; text-align: center; }
+    .stat-value { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+    .stat-label { font-size: 0.75rem; color: var(--dim); }
+
+    .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.25rem; margin: 1rem 0; }
+    .badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 1rem; font-size: 0.7rem; font-weight: 600; }
+    .badge-green { background: #052e16; color: var(--green); }
+    .badge-blue { background: #1e3a5f; color: var(--accent); }
+    .badge-purple { background: #2e1065; color: var(--accent2); }
+    .badge-amber { background: #451a03; color: var(--amber); }
+
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; }
+    th { text-align: left; padding: 0.6rem 0.75rem; border-bottom: 2px solid var(--border); color: var(--text); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border2); color: var(--muted); }
+    tr:hover td { background: rgba(59,130,246,0.03); }
+    code { background: var(--bg3); padding: 0.15rem 0.4rem; border-radius: 0.25rem; font-size: 0.85em; color: var(--green); font-family: 'Fira Code', 'SF Mono', monospace; }
+    pre { background: var(--bg3); border: 1px solid var(--border); border-radius: 0.5rem; padding: 1rem; overflow-x: auto; margin: 1rem 0; font-size: 0.8rem; line-height: 1.6; }
+    pre code { background: none; padding: 0; color: var(--muted); }
+
+    .diagram { background: var(--bg3); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.5rem; margin: 1.5rem 0; font-family: 'Fira Code', monospace; font-size: 0.8rem; line-height: 1.8; color: var(--accent); text-align: center; white-space: pre; overflow-x: auto; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .tag { display: inline-block; background: var(--bg3); border: 1px solid var(--border); padding: 0.1rem 0.4rem; border-radius: 0.25rem; font-size: 0.75rem; color: var(--dim); margin: 0.1rem; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 1rem; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    /* Confidential banner */
+    .confidential { background: #451a03; border: 1px solid #92400e; border-radius: 0.5rem; padding: 0.75rem 1rem; margin-bottom: 2rem; font-size: 0.85rem; color: var(--amber); }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="logo">SecondBrain</div>
+    <span class="logo-sub">P2L / Shawn Cutter &mdash; Internal Docs</span>
+
+    <div class="nav-section">
+      <div class="nav-label">Overview</div>
+      <a class="nav-link" href="#overview">Architecture</a>
+      <a class="nav-link" href="#stats">System Stats</a>
+      <a class="nav-link" href="#diagram">System Diagram</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Services</div>
+      <a class="nav-link" href="#agents">All 26 Agents</a>
+      <a class="nav-link" href="#ports">Port Allocation</a>
+      <a class="nav-link" href="#docker">Docker &amp; Profiles</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Infrastructure</div>
+      <a class="nav-link" href="#databases">Databases</a>
+      <a class="nav-link" href="#schemas">DB Schemas</a>
+      <a class="nav-link" href="#eventbus">Event Bus</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Development</div>
+      <a class="nav-link" href="#patterns">Go Patterns</a>
+      <a class="nav-link" href="#quickstart">Quick Start</a>
+      <a class="nav-link" href="#env">Environment Vars</a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Organizations</div>
+      <a class="nav-link" href="#orgs">Companies</a>
+      <a class="nav-link" href="#accounts">Accounts</a>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="confidential">This documentation is confidential. Do not share access credentials publicly.</div>
+
+    <!-- OVERVIEW -->
+    <div class="hero" id="overview">
+      <h1>SecondBrain Architecture</h1>
+      <p>Unified automation system for social media, tasks, calendars, journals, email, and finances.</p>
+    </div>
+
+    <div class="stats" id="stats">
+      <div class="stat"><div class="stat-value">26</div><div class="stat-label">Go Agents</div></div>
+      <div class="stat"><div class="stat-value">50K+</div><div class="stat-label">Lines of Code</div></div>
+      <div class="stat"><div class="stat-value">845+</div><div class="stat-label">Tests Passing</div></div>
+      <div class="stat"><div class="stat-value">9</div><div class="stat-label">Docker Containers</div></div>
+    </div>
+
+    <div class="card">
+      <p><strong>Module:</strong> <code>github.com/p2l/secondbrain</code> &middot; <strong>Go 1.25</strong> &middot; <strong>Binary:</strong> <code>secondbrain</code> (Cobra subcommands)</p>
+      <p><strong>Pattern:</strong> All 26 agents run as goroutines in a single unified Docker container (<code>go-agents</code>), each on its own port. Gateway reverse-proxies all traffic through port 8022.</p>
+    </div>
+
+    <!-- DIAGRAM -->
+    <h2 id="diagram">System Architecture</h2>
+    <div class="diagram">
+       Web Dashboard (React/Vite :8020)
+                    |
+              Gateway (:8022)
+                    |
+      +-------------+-------------+
+      |             |             |
+  Orchestration   Domain      Infrastructure
+      |             |             |
+  Router(:8032)  Gmail(:8040)  PostgreSQL(:5437)
+  Orch.(:8045)   Calendar(:8037) Redis(:6380)
+  OpenClaw(:8049) QuickBooks(:8041) Neo4j(:7475)
+  Brief(:8044)   Social(:8036)  MSSQL(:1434)
+  Conductor(:8051) GitHub(:8034)
+                 Kanban(:8035)
+                 Chat(:8043)
+                 Knowledge(:8039)
+                 Day One(:8038)
+                 Day.ai(:8042)
+                 Tasks(:8055)
+                 Task(:8001)
+                 Obsidian(:8047)
+                 People(:8054)
+                 Contacts(:8052)
+                 Graph(:8053)
+                 Capture(:8050)
+                 WebSocket(:8056)
+    </div>
+
+    <h3>Tiers</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h4>Tier 1 &mdash; Orchestration</h4>
+        <p>Router, Orchestrator, OpenClaw Bridge, Brief, Conductor, Error Handler</p>
+        <p>These coordinate work across domain agents, route requests, and manage workflows.</p>
+      </div>
+      <div class="card">
+        <h4>Tier 2 &mdash; Domain</h4>
+        <p>Gmail, Calendar, QuickBooks, Social, GitHub, Kanban, Chat, Knowledge, Day One, Day.ai, Tasks, Obsidian, People, Contacts, Graph, Capture, WebSocket</p>
+        <p>Each agent owns its data and exposes REST APIs.</p>
+      </div>
+    </div>
+
+    <!-- AGENTS TABLE -->
+    <h2 id="agents">All 26 Agents</h2>
+    <table>
+      <thead><tr><th>Agent</th><th>Port</th><th>Subcommand</th><th>Tier</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Gateway</strong></td><td><code>8022</code></td><td><code>gateway serve</code></td><td><span class="badge badge-purple">Orchestration</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Router</strong></td><td><code>8032</code></td><td><code>router serve</code></td><td><span class="badge badge-purple">Orchestration</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Performance</strong></td><td><code>8033</code></td><td><code>performance serve</code></td><td><span class="badge badge-purple">Orchestration</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>GitHub</strong></td><td><code>8034</code></td><td><code>github serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Kanban</strong></td><td><code>8035</code></td><td><code>kanban serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Social</strong></td><td><code>8036</code></td><td><code>social serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Calendar</strong></td><td><code>8037</code></td><td><code>calendar serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Day One</strong></td><td><code>8038</code></td><td><code>dayone serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Knowledge</strong></td><td><code>8039</code></td><td><code>knowledge serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Gmail</strong></td><td><code>8040</code></td><td><code>gmail serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>QuickBooks</strong></td><td><code>8041</code></td><td><code>quickbooks serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Day.ai</strong></td><td><code>8042</code></td><td><code>crm serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Chat</strong></td><td><code>8043</code></td><td><code>chat serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Brief</strong></td><td><code>8044</code></td><td><code>brief serve</code></td><td><span class="badge badge-purple">Orchestration</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Orchestrator</strong></td><td><code>8045</code></td><td><code>orchestrator serve</code></td><td><span class="badge badge-purple">Orchestration</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Error Handler</strong></td><td><code>8046</code></td><td><code>errorhandler serve</code></td><td><span class="badge badge-purple">Orchestration</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Obsidian</strong></td><td><code>8047</code></td><td><code>obsidian serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Contact</strong></td><td><code>8048</code></td><td><code>contact serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>OpenClaw Bridge</strong></td><td><code>8049</code></td><td><code>openclaw-bridge serve</code></td><td><span class="badge badge-purple">Orchestration</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Capture</strong></td><td><code>8050</code></td><td><code>capture serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Conductor</strong></td><td><code>8051</code></td><td><code>conductor serve</code></td><td><span class="badge badge-purple">Orchestration</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Contacts</strong></td><td><code>8052</code></td><td><code>contacts serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Graph</strong></td><td><code>8053</code></td><td><code>graph serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>People</strong></td><td><code>8054</code></td><td><code>people serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Tasks v2</strong></td><td><code>8055</code></td><td><code>tasks serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>WebSocket</strong></td><td><code>8056</code></td><td><code>websocket serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+        <tr><td><strong>Task (legacy)</strong></td><td><code>8001</code></td><td><code>task serve</code></td><td><span class="badge badge-blue">Domain</span></td><td><span class="badge badge-green">Shipped</span></td></tr>
+      </tbody>
+    </table>
+
+    <!-- PORTS -->
+    <h2 id="ports">Port Allocation</h2>
+    <h3>Infrastructure</h3>
+    <table>
+      <thead><tr><th>Service</th><th>Port</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>PostgreSQL</td><td><code>5437</code></td><td>Primary database (avoids default 5432)</td></tr>
+        <tr><td>Redis</td><td><code>6380</code></td><td>Cache + event bus + sessions</td></tr>
+        <tr><td>Neo4j HTTP</td><td><code>7475</code></td><td>Knowledge graph browser</td></tr>
+        <tr><td>Neo4j Bolt</td><td><code>7688</code></td><td>Knowledge graph driver</td></tr>
+        <tr><td>MSSQL</td><td><code>1434</code></td><td>Legacy integrations</td></tr>
+        <tr><td>Web Dashboard</td><td><code>8020</code></td><td>React/Vite frontend</td></tr>
+        <tr><td>Gateway</td><td><code>8022</code></td><td>Reverse proxy to all agents</td></tr>
+        <tr><td>Activity Monitor</td><td><code>8024</code></td><td>Repository monitoring</td></tr>
+        <tr><td>Unified Endpoint</td><td><code>8099</code></td><td>Health + status for go-agents container</td></tr>
+        <tr><td>OpenClaw Gateway</td><td><code>18789</code></td><td>Node.js ChatOps + skill dispatch</td></tr>
+      </tbody>
+    </table>
+
+    <!-- DOCKER -->
+    <h2 id="docker">Docker &amp; Profiles</h2>
+    <div class="card">
+      <p><strong>9 containers total</strong> (down from 28+). All 26 Go agents consolidated into single <code>go-agents</code> container.</p>
+    </div>
+    <table>
+      <thead><tr><th>Container</th><th>Image</th><th>Profile</th><th>Resources</th></tr></thead>
+      <tbody>
+        <tr><td><code>go-agents</code></td><td>Custom (go-agent.Dockerfile)</td><td>agents</td><td>4GB memory</td></tr>
+        <tr><td><code>postgres</code></td><td>postgres:16</td><td>db</td><td>1GB memory</td></tr>
+        <tr><td><code>redis</code></td><td>redis:7-alpine</td><td>messaging</td><td>256MB memory</td></tr>
+        <tr><td><code>neo4j</code></td><td>neo4j:5</td><td>knowledge</td><td>1.5GB memory</td></tr>
+        <tr><td><code>mssql</code></td><td>mcr.microsoft.com/mssql/server</td><td>db</td><td>2GB memory</td></tr>
+        <tr><td><code>web</code></td><td>Custom (Vite build)</td><td>web</td><td>&mdash;</td></tr>
+        <tr><td><code>task-worker</code></td><td>Python</td><td>tasks</td><td>&mdash;</td></tr>
+        <tr><td><code>openclaw-gateway</code></td><td>Node.js</td><td>openclaw</td><td>&mdash;</td></tr>
+        <tr><td><code>activity-monitor</code></td><td>Custom Go</td><td>monitoring</td><td>&mdash;</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Profile Commands</h3>
+    <pre><code># Start everything
+docker compose --profile full up -d
+
+# Just agents + infra + web
+docker compose --profile agents up -d
+
+# Infrastructure only (for local dev)
+docker compose --profile db --profile messaging up -d
+
+# Individual profiles
+docker compose --profile web up -d
+docker compose --profile knowledge up -d
+docker compose --profile openclaw up -d
+docker compose --profile monitoring up -d</code></pre>
+
+    <!-- DATABASES -->
+    <h2 id="databases">Database Infrastructure</h2>
+    <div class="grid-2">
+      <div class="card">
+        <h4>PostgreSQL <code>:5437</code></h4>
+        <p>Primary relational database. Each agent has its own schema/tables. Encryption at rest. Multi-tenant isolation.</p>
+      </div>
+      <div class="card">
+        <h4>Redis <code>:6380</code></h4>
+        <p>Cache layer, event bus (pub/sub), session storage. 256MB limit. In-memory fallback if unavailable.</p>
+      </div>
+      <div class="card">
+        <h4>Neo4j <code>:7475/:7688</code></h4>
+        <p>Knowledge graph. Stores entity relationships, document connections, wikilinks from Obsidian vault.</p>
+      </div>
+      <div class="card">
+        <h4>MSSQL <code>:1434</code></h4>
+        <p>Legacy integrations. Microsoft 365 and enterprise data sources.</p>
+      </div>
+    </div>
+
+    <!-- SCHEMAS -->
+    <h2 id="schemas">Database Schemas (Key Tables)</h2>
+    <h3>Social Agent</h3>
+    <p><code>metrics_snapshots</code> &mdash; Social media metrics over time<br>
+    <code>task_snapshots</code> &mdash; Tasks from ClickUp/1Medium<br>
+    <code>task_sync_history</code> &mdash; Sync audit log</p>
+
+    <h3>Tasks Agent</h3>
+    <p><code>tasks</code> &mdash; Unified tasks (external_id, platform, title, status, priority, assignees, tags, due_date)<br>
+    <code>sync_history</code> &mdash; Sync audit log (platform, sync_type, task_count, status)<br>
+    Indexes on platform, status, assignee, due_date</p>
+
+    <h3>Calendar Agent</h3>
+    <p><code>events</code> &mdash; Unified calendar events<br>
+    <code>event_sources</code> &mdash; Platform-specific event data<br>
+    <code>conflicts</code> &mdash; Detected scheduling conflicts</p>
+
+    <h3>Knowledge Agent</h3>
+    <p><code>file_snapshots</code> &mdash; Indexed files (provider, file_id, account, path, processing_status)<br>
+    <code>document_content</code> &mdash; Extracted text (file_id, text_content, word_count)<br>
+    <code>entities</code> &mdash; Named entities (type, name, normalized_name, confidence)<br>
+    <code>topics</code> &mdash; Extracted topics (name, keywords, parent_topic_id)</p>
+
+    <h3>Journal Agent (Day One)</h3>
+    <p><code>entries</code> &mdash; Day One entries with full metadata<br>
+    <code>tags</code>, <code>entry_tags</code> &mdash; Tag relationships<br>
+    <code>locations</code>, <code>weather</code>, <code>photos</code>, <code>activity_types</code></p>
+
+    <!-- EVENT BUS -->
+    <h2 id="eventbus">Event Bus</h2>
+    <div class="card">
+      <p>All agents communicate via Redis pub/sub through <code>internal/shared/messaging/</code>. Falls back to in-memory if Redis unavailable (note: cross-container events are lost in fallback mode).</p>
+      <p><strong>Pattern:</strong> Publish events on state changes &rarr; Subscribers react asynchronously &rarr; Orchestrator coordinates multi-agent workflows.</p>
+    </div>
+
+    <!-- PATTERNS -->
+    <h2 id="patterns">Go Patterns</h2>
+
+    <h3>Server Scaffold</h3>
+    <pre><code>// Every agent follows this pattern
+srv := server.New(server.ServerConfig{
+    Name: "gmail",
+    Port: 8040,
+})
+g := srv.APIGroup("/api/v1")
+RegisterHandlers(g, store, logger)
+srv.Run()</code></pre>
+
+    <h3>Middleware Stack</h3>
+    <pre><code>Recovery → RequestLogger → CORS → Auth (optional) → RateLimit (optional)</code></pre>
+
+    <h3>PostgreSQL Retry</h3>
+    <pre><code>// Exponential backoff for PG connections at startup
+connectPGWithRetry(ctx, dbURL, maxRetries, agentName)
+// Retries: 1s, 2s, 4s, 8s, 16s with SQLite fallback</code></pre>
+
+    <h3>Credential Encryption</h3>
+    <pre><code>// All OAuth tokens encrypted with Fernet before storage
+vault := credentials.NewVault(vaultDir)
+vault.Store(platform, accountID, token)  // encrypts
+token := vault.Get(platform, accountID)   // decrypts</code></pre>
+
+    <!-- QUICK START -->
+    <h2 id="quickstart">Quick Start</h2>
+    <pre><code>cd /path/to/SecondBrain
+
+# Build binary
+go build -o secondbrain cmd/secondbrain/main.go
+
+# Docker: Start all agents
+docker compose --profile agents up -d
+
+# Local dev: infrastructure in Docker, agents directly
+docker compose --profile db --profile messaging up -d
+./secondbrain gateway serve --port 8022
+./secondbrain gmail serve --port 8040
+
+# Run tests
+go test ./internal/... ./cmd/... -v
+
+# Help
+./secondbrain --help</code></pre>
+
+    <!-- ENV VARS -->
+    <h2 id="env">Environment Variables (Key)</h2>
+    <h3>Core</h3>
+    <pre><code>DATA_DIR=./data
+VAULT_DIR=./data/vault
+LOG_LEVEL=INFO
+ANTHROPIC_API_KEY=...
+DATABASE_URL=postgres://...</code></pre>
+
+    <h3>Gmail</h3>
+    <pre><code>GMAIL_ACCOUNTS=personal,energiacres
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+TASK_AUTO_CREATE=true
+TASK_EXTRACTION_MIN_CONFIDENCE=0.7</code></pre>
+
+    <h3>QuickBooks</h3>
+    <pre><code>QUICKBOOKS_CLIENT_ID=...
+QUICKBOOKS_CLIENT_SECRET=...
+QUICKBOOKS_REDIRECT_URI=https://sb.energiacres.ai/quickbooks/callback
+QUICKBOOKS_REALMS=energiacres,cvfarms,terrasow,cvlabs,greenscreens,everberry,personal</code></pre>
+
+    <h3>Calendar</h3>
+    <pre><code>GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+AZURE_CLIENT_ID=...
+AZURE_CLIENT_SECRET=...
+AZURE_TENANT_ID=...</code></pre>
+
+    <h3>Knowledge / Neo4j</h3>
+    <pre><code>NEO4J_URI=bolt://localhost:7688
+NEO4J_PASSWORD=...
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=llama3.2</code></pre>
+
+    <!-- ORGANIZATIONS -->
+    <h2 id="orgs">Organizations</h2>
+    <table>
+      <thead><tr><th>Organization</th><th>Domain</th><th>Platforms</th></tr></thead>
+      <tbody>
+        <tr><td><strong>EnergiAcres</strong></td><td>energiacres.com</td><td><span class="tag">Instagram</span> <span class="tag">LinkedIn</span> <span class="tag">YouTube</span></td></tr>
+        <tr><td><strong>TerrasOW</strong></td><td>terrasow.com</td><td><span class="tag">LinkedIn</span></td></tr>
+        <tr><td><strong>CV Farms</strong></td><td>cvfarms.co</td><td><span class="tag">LinkedIn</span></td></tr>
+        <tr><td><strong>CV Labs</strong></td><td>&mdash;</td><td><span class="tag">LinkedIn Page</span></td></tr>
+        <tr><td><strong>GreenScreens</strong></td><td>&mdash;</td><td><span class="tag">Instagram</span> <span class="tag">LinkedIn</span></td></tr>
+        <tr><td><strong>Project Everberry</strong></td><td>&mdash;</td><td><span class="tag">LinkedIn Page</span></td></tr>
+        <tr><td><strong>Personal</strong></td><td>shawncutter.com</td><td><span class="tag">Instagram</span> <span class="tag">LinkedIn</span> <span class="tag">YouTube</span> <span class="tag">Twitter</span> <span class="tag">Facebook</span> <span class="tag">Threads</span> <span class="tag">Telegram</span></td></tr>
+      </tbody>
+    </table>
+
+    <!-- ACCOUNTS -->
+    <h2 id="accounts">Email Accounts</h2>
+    <table>
+      <thead><tr><th>Email</th><th>Provider</th><th>Organization</th></tr></thead>
+      <tbody>
+        <tr><td>shawncutter@gmail.com</td><td>Google</td><td>Personal</td></tr>
+        <tr><td>shawn@terrasow.com</td><td>Microsoft 365</td><td>TerrasOW</td></tr>
+        <tr><td>scutter@cvfarms.co</td><td>Microsoft 365</td><td>CV Farms</td></tr>
+        <tr><td>shawn@energiacres.com</td><td>&mdash;</td><td>EnergiAcres</td></tr>
+      </tbody>
+    </table>
+
+    <footer style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); text-align: center; color: var(--dim); font-size: 0.8rem;">
+      <p>SecondBrain &copy; 2026 P2L / Shawn Cutter &middot; Confidential</p>
+    </footer>
+  </main>
+</div>
+</body>
+</html>
