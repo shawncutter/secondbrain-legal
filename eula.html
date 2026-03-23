@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>End User License Agreement - SecondBrain by P2L</title>
+  <style>
+    :root { --bg: #0f172a; --card: #1e293b; --text: #e2e8f0; --muted: #94a3b8; --accent: #3b82f6; --border: #334155; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    .container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    .subtitle { color: var(--muted); margin-bottom: 2rem; }
+    h2 { font-size: 1.25rem; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--accent); }
+    h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    p, li { margin-bottom: 0.75rem; color: var(--muted); }
+    ul, ol { padding-left: 1.5rem; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.5rem; margin: 1rem 0; }
+    .badge { display: inline-block; background: #1e3a5f; color: var(--accent); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.85rem; margin-bottom: 1rem; }
+    footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <span class="badge">Legal</span>
+    <h1>End User License Agreement</h1>
+    <p class="subtitle">Effective Date: March 23, 2026 &middot; Last Updated: March 23, 2026</p>
+
+    <div class="card">
+      <p>This End User License Agreement ("Agreement") is a legal agreement between you ("User") and <strong>Shawn Cutter doing business as P2L</strong> ("Provider," "we," "our") for the use of the <strong>SecondBrain</strong> application ("Application"). By accessing or using the Application, you agree to be bound by this Agreement.</p>
+    </div>
+
+    <h2>1. License Grant</h2>
+    <p>Subject to the terms of this Agreement, we grant you a limited, non-exclusive, non-transferable, revocable license to access and use the Application for your internal business operations. This license permits you to:</p>
+    <ul>
+      <li>Connect your authorized business accounts (QuickBooks, Gmail, Calendar, GitHub, social media)</li>
+      <li>View dashboards, reports, and analytics generated from your connected data</li>
+      <li>Use automation features to coordinate workflows across your organizations</li>
+      <li>Export data and reports for your business use</li>
+    </ul>
+
+    <h2>2. Account and Access</h2>
+    <ul>
+      <li>You must provide accurate account information and maintain the security of your credentials</li>
+      <li>You are responsible for all activity under your account</li>
+      <li>You must have proper authorization to connect third-party accounts (e.g., QuickBooks company files you are authorized to access)</li>
+      <li>We reserve the right to suspend or terminate accounts that violate this Agreement</li>
+    </ul>
+
+    <h2>3. QuickBooks Integration</h2>
+    <div class="card">
+      <p>The Application integrates with Intuit QuickBooks Online through Intuit's official OAuth 2.0 API. By connecting your QuickBooks account:</p>
+      <ul>
+        <li>You authorize SecondBrain to access your QuickBooks data as described in our <a href="privacy.html">Privacy Policy</a></li>
+        <li>You confirm you have the authority to grant this access for the connected QuickBooks company</li>
+        <li>You understand that SecondBrain provides read-only access to financial data for reporting and analytics purposes</li>
+        <li>You may revoke this access at any time through SecondBrain's settings or through your Intuit account</li>
+      </ul>
+    </div>
+
+    <h2>4. Acceptable Use</h2>
+    <p>You agree NOT to:</p>
+    <ul>
+      <li>Use the Application for any unlawful purpose</li>
+      <li>Attempt to access data belonging to other users or organizations</li>
+      <li>Reverse engineer, decompile, or disassemble any part of the Application</li>
+      <li>Use the Application to transmit malware, spam, or harmful content</li>
+      <li>Share your account credentials with unauthorized individuals</li>
+      <li>Circumvent any security measures or access controls</li>
+      <li>Use automated tools to scrape or extract data from the Application beyond its intended use</li>
+    </ul>
+
+    <h2>5. Intellectual Property</h2>
+    <p>The Application, including its source code, design, logos, and documentation, is the intellectual property of P2L / Shawn Cutter. This Agreement does not transfer any ownership rights to you.</p>
+    <p>Your data remains your property. We claim no ownership over data you provide or that is accessed through your connected accounts.</p>
+
+    <h2>6. Data Handling</h2>
+    <p>Our handling of your data is governed by our <a href="privacy.html">Privacy Policy</a>, which is incorporated into this Agreement by reference. Key points:</p>
+    <ul>
+      <li>Your financial data is encrypted at rest and in transit</li>
+      <li>OAuth tokens are encrypted using Fernet symmetric encryption</li>
+      <li>Multi-tenant isolation ensures data separation between users</li>
+      <li>We do not sell or share your data with third parties for marketing</li>
+    </ul>
+
+    <h2>7. Service Availability</h2>
+    <p>We strive to maintain high availability but do not guarantee uninterrupted service. The Application may experience:</p>
+    <ul>
+      <li>Planned maintenance windows (communicated in advance when possible)</li>
+      <li>Temporary disruptions due to third-party API changes (QuickBooks, Google, GitHub)</li>
+      <li>Performance variations based on data volume and connected services</li>
+    </ul>
+
+    <h2>8. Disclaimer of Warranties</h2>
+    <p>THE APPLICATION IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED. WE DO NOT WARRANT THAT:</p>
+    <ul>
+      <li>The Application will be error-free or uninterrupted</li>
+      <li>Financial data displayed will be 100% accurate (it depends on source system accuracy)</li>
+      <li>The Application will meet all of your specific business requirements</li>
+    </ul>
+    <p>You acknowledge that financial data displayed in SecondBrain is sourced from your connected accounts and should be verified against source systems for critical business decisions.</p>
+
+    <h2>9. Limitation of Liability</h2>
+    <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, P2L / SHAWN CUTTER SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, OR BUSINESS OPPORTUNITIES, ARISING FROM YOUR USE OF THE APPLICATION.</p>
+    <p>Our total liability for any claim arising from this Agreement shall not exceed the amount you paid for the Application in the twelve (12) months preceding the claim.</p>
+
+    <h2>10. Indemnification</h2>
+    <p>You agree to indemnify and hold harmless P2L / Shawn Cutter from any claims, damages, or expenses arising from:</p>
+    <ul>
+      <li>Your use of the Application</li>
+      <li>Your violation of this Agreement</li>
+      <li>Your violation of any third-party rights</li>
+      <li>Unauthorized access to your account due to your failure to maintain credential security</li>
+    </ul>
+
+    <h2>11. Termination</h2>
+    <p>Either party may terminate this Agreement at any time:</p>
+    <ul>
+      <li><strong>By you:</strong> Disconnect all services and delete your account through the Application</li>
+      <li><strong>By us:</strong> For violation of this Agreement, with reasonable notice when possible</li>
+    </ul>
+    <p>Upon termination, your right to access the Application ceases immediately. Data deletion follows the schedule in our <a href="privacy.html">Privacy Policy</a>.</p>
+
+    <h2>12. Governing Law</h2>
+    <p>This Agreement is governed by the laws of the State of Florida, United States, without regard to conflict of law principles. Any disputes shall be resolved through binding arbitration in the State of Florida.</p>
+
+    <h2>13. Changes to This Agreement</h2>
+    <p>We may update this Agreement from time to time. Material changes will be communicated through the Application at least 30 days before taking effect. Continued use after the effective date constitutes acceptance.</p>
+
+    <h2>14. Contact</h2>
+    <div class="card">
+      <p><strong>Shawn Cutter / P2L</strong></p>
+      <p>Email: <a href="mailto:shawn@energiacres.com">shawn@energiacres.com</a></p>
+      <p>Application: <a href="https://sb.energiacres.ai">secondbrain.energiacres.com</a></p>
+    </div>
+
+    <footer>
+      <p>&copy; 2026 P2L / Shawn Cutter. All rights reserved.</p>
+      <p><a href="eula.html">End User License Agreement</a> &middot; <a href="privacy.html">Privacy Policy</a></p>
+    </footer>
+  </div>
+</body>
+</html>

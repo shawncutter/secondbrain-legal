@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - SecondBrain by P2L</title>
+  <style>
+    :root { --bg: #0f172a; --card: #1e293b; --text: #e2e8f0; --muted: #94a3b8; --accent: #3b82f6; --border: #334155; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+    .container { max-width: 800px; margin: 0 auto; padding: 3rem 1.5rem; }
+    h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    .subtitle { color: var(--muted); margin-bottom: 2rem; }
+    h2 { font-size: 1.25rem; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--accent); }
+    h3 { font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    p, li { margin-bottom: 0.75rem; color: var(--muted); }
+    ul, ol { padding-left: 1.5rem; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.5rem; margin: 1rem 0; }
+    .badge { display: inline-block; background: #1e3a5f; color: var(--accent); padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.85rem; margin-bottom: 1rem; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    th, td { text-align: left; padding: 0.75rem; border-bottom: 1px solid var(--border); color: var(--muted); }
+    th { color: var(--text); font-weight: 600; }
+    footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <span class="badge">Legal</span>
+    <h1>Privacy Policy</h1>
+    <p class="subtitle">Effective Date: March 23, 2026 &middot; Last Updated: March 23, 2026</p>
+
+    <div class="card">
+      <p><strong>SecondBrain</strong> ("we," "our," or "the Application") is a business automation platform operated by <strong>Shawn Cutter</strong> doing business as <strong>P2L</strong>. This Privacy Policy describes how we collect, use, store, and protect your information when you use our application, including our integration with Intuit QuickBooks Online.</p>
+    </div>
+
+    <h2>1. Information We Collect</h2>
+
+    <h3>1.1 Account Information</h3>
+    <p>When you create an account or connect a service, we collect:</p>
+    <ul>
+      <li>Name and email address</li>
+      <li>Organization name and identifiers</li>
+      <li>Authentication credentials (OAuth tokens, securely encrypted)</li>
+    </ul>
+
+    <h3>1.2 QuickBooks Financial Data</h3>
+    <p>When you connect your QuickBooks Online account, we access the following data through Intuit's OAuth 2.0 API:</p>
+    <ul>
+      <li><strong>Company information</strong> &mdash; company name, address, fiscal year settings</li>
+      <li><strong>Financial reports</strong> &mdash; profit &amp; loss, balance sheet, cash flow statements</li>
+      <li><strong>Accounts</strong> &mdash; chart of accounts, account balances</li>
+      <li><strong>Invoices and payments</strong> &mdash; invoice status, payment history, amounts</li>
+      <li><strong>Vendors and customers</strong> &mdash; names, contact information, transaction history</li>
+      <li><strong>Expenses and bills</strong> &mdash; expense categories, amounts, dates</li>
+    </ul>
+
+    <h3>1.3 Connected Service Data</h3>
+    <p>SecondBrain integrates with multiple services. Each connected service provides data relevant to its function:</p>
+    <ul>
+      <li>Google Gmail &mdash; email metadata and content for authorized accounts</li>
+      <li>Google Calendar &mdash; calendar events and scheduling data</li>
+      <li>GitHub &mdash; repository activity, issues, pull requests</li>
+      <li>Social media platforms &mdash; post content and engagement metrics</li>
+    </ul>
+
+    <h3>1.4 Usage Data</h3>
+    <p>We collect anonymized usage analytics including pages visited, features used, and performance metrics to improve the application.</p>
+
+    <h2>2. How We Use Your Information</h2>
+    <p>We use collected information exclusively to:</p>
+    <ul>
+      <li><strong>Provide the Service</strong> &mdash; display financial dashboards, generate reports, sync data across your connected accounts</li>
+      <li><strong>Automate workflows</strong> &mdash; coordinate tasks, calendar events, and communications across your organizations</li>
+      <li><strong>Generate insights</strong> &mdash; provide financial analytics, performance metrics, and business intelligence across your connected organizations</li>
+      <li><strong>Maintain security</strong> &mdash; detect unauthorized access, protect your data, and ensure system integrity</li>
+    </ul>
+
+    <div class="card">
+      <p><strong>We do NOT:</strong></p>
+      <ul>
+        <li>Sell, rent, or share your data with third parties for marketing purposes</li>
+        <li>Use your financial data for advertising or profiling</li>
+        <li>Share your QuickBooks data with any party other than Intuit (for API access)</li>
+        <li>Access data beyond what is necessary to provide the requested features</li>
+      </ul>
+    </div>
+
+    <h2>3. Data Storage and Security</h2>
+
+    <h3>3.1 Storage Location</h3>
+    <p>Your data is stored on secured servers within the United States. We use PostgreSQL databases with encryption at rest and in transit (TLS 1.2+).</p>
+
+    <h3>3.2 Security Measures</h3>
+    <ul>
+      <li><strong>Encryption</strong> &mdash; All OAuth tokens are encrypted using Fernet symmetric encryption before storage</li>
+      <li><strong>Transport Security</strong> &mdash; All API communication uses HTTPS/TLS</li>
+      <li><strong>Access Controls</strong> &mdash; Multi-tenant isolation ensures each user can only access their own data</li>
+      <li><strong>Token Management</strong> &mdash; OAuth refresh tokens are stored encrypted; access tokens are short-lived and automatically refreshed</li>
+      <li><strong>No Plain-Text Secrets</strong> &mdash; Credentials are never stored in plain text or logged</li>
+    </ul>
+
+    <h3>3.3 Data Retention</h3>
+    <p>We retain your data for as long as your account is active. When you disconnect a service or delete your account:</p>
+    <ul>
+      <li>OAuth tokens are immediately revoked and deleted</li>
+      <li>Cached financial data is purged within 30 days</li>
+      <li>Anonymized usage metrics may be retained for service improvement</li>
+    </ul>
+
+    <h2>4. QuickBooks-Specific Provisions</h2>
+
+    <div class="card">
+      <h3>4.1 Intuit Data Use Compliance</h3>
+      <p>Our use of QuickBooks data complies with <a href="https://developer.intuit.com/app/developer/qbo/docs/develop/authentication-and-authorization" target="_blank">Intuit's Developer Terms of Service</a> and data use policies:</p>
+      <ul>
+        <li>We only access QuickBooks data that you explicitly authorize</li>
+        <li>Financial data is used solely to provide SecondBrain's dashboard, reporting, and automation features</li>
+        <li>We do not aggregate your financial data with other users' data</li>
+        <li>You can revoke access at any time from within SecondBrain or from your QuickBooks account settings</li>
+      </ul>
+
+      <h3>4.2 Disconnect and Data Deletion</h3>
+      <p>You may disconnect your QuickBooks account at any time by:</p>
+      <ol>
+        <li>Navigating to the QuickBooks page in SecondBrain and clicking "Disconnect"</li>
+        <li>Revoking access from <a href="https://accounts.intuit.com" target="_blank">Intuit Account Settings</a> &gt; Connected Apps</li>
+      </ol>
+      <p>Upon disconnection, all QuickBooks OAuth tokens are immediately revoked and deleted, and cached QuickBooks data is removed within 30 days.</p>
+    </div>
+
+    <h2>5. Data Sharing</h2>
+    <p>We share your information only in the following circumstances:</p>
+    <table>
+      <tr><th>Recipient</th><th>Purpose</th><th>Data Shared</th></tr>
+      <tr><td>Intuit (QuickBooks)</td><td>API access to your financial data</td><td>OAuth tokens (for authentication only)</td></tr>
+      <tr><td>Google</td><td>Gmail/Calendar API access</td><td>OAuth tokens (for authentication only)</td></tr>
+      <tr><td>Infrastructure providers</td><td>Hosting and database services</td><td>Encrypted data at rest</td></tr>
+    </table>
+    <p>We may also disclose data if required by law, regulation, or valid legal process.</p>
+
+    <h2>6. Your Rights</h2>
+    <p>You have the right to:</p>
+    <ul>
+      <li><strong>Access</strong> &mdash; Request a copy of all data we hold about you</li>
+      <li><strong>Correct</strong> &mdash; Update inaccurate information in your account</li>
+      <li><strong>Delete</strong> &mdash; Request deletion of your account and all associated data</li>
+      <li><strong>Disconnect</strong> &mdash; Revoke any connected service at any time</li>
+      <li><strong>Export</strong> &mdash; Download your data in a portable format</li>
+    </ul>
+    <p>To exercise any of these rights, contact us at <a href="mailto:shawn@energiacres.com">shawn@energiacres.com</a>.</p>
+
+    <h2>7. Children's Privacy</h2>
+    <p>SecondBrain is a business tool not intended for use by individuals under 18 years of age. We do not knowingly collect data from children.</p>
+
+    <h2>8. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. Material changes will be communicated through the application or via email. Continued use of SecondBrain after changes constitutes acceptance of the updated policy.</p>
+
+    <h2>9. Contact Us</h2>
+    <div class="card">
+      <p><strong>Shawn Cutter / P2L</strong></p>
+      <p>Email: <a href="mailto:shawn@energiacres.com">shawn@energiacres.com</a></p>
+      <p>Application: <a href="https://sb.energiacres.ai">sb.energiacres.ai</a></p>
+    </div>
+
+    <footer>
+      <p>&copy; 2026 P2L / Shawn Cutter. All rights reserved.</p>
+      <p><a href="eula.html">End User License Agreement</a> &middot; <a href="privacy.html">Privacy Policy</a></p>
+    </footer>
+  </div>
+</body>
+</html>
